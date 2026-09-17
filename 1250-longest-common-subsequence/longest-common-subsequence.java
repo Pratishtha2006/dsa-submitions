@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class Solution {
     int[][] dp;
 
@@ -15,12 +17,12 @@ class Solution {
             return dp[i][j];
         }
 
-        // characters match hogye
+        // Characters match
         if (text1.charAt(i) == text2.charAt(j)) {
             return dp[i][j] = 1 + func(i + 1, j + 1, text1, text2);
         }
 
-        // If characters don't match
+        // Characters don't match
         int c1 = func(i + 1, j, text1, text2);
         int c2 = func(i, j + 1, text1, text2);
 
@@ -31,14 +33,11 @@ class Solution {
         int n = text1.length();
         int m = text2.length();
 
-        // Define DP table
         dp = new int[n][m];
 
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                dp[i][j] = -1;
-            }
+        // Fill dp with -1 without for loop
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
         }
 
         return func(0, 0, text1, text2);
