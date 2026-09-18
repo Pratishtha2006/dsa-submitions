@@ -17,17 +17,20 @@ class Solution {
             return dp[i][j];
         }
 
-        // Characters match
+        // Characters match hogye 
         if (text1.charAt(i) == text2.charAt(j)) {
             return dp[i][j] = 1 + func(i + 1, j + 1, text1, text2);
         }
 
         // Characters don't match
+        else{
         int c1 = func(i + 1, j, text1, text2);
         int c2 = func(i, j + 1, text1, text2);
 
         return dp[i][j] = Math.max(c1, c2);
+        }
     }
+
 
     public int longestCommonSubsequence(String text1, String text2) {
         int n = text1.length();
