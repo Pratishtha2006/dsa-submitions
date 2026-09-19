@@ -5,11 +5,10 @@ class Solution {
 
         for (int a : nums) {
 
-            // If tmp is empty OR a is greater than last element
+            // If tmp is empty OR a is greater than last element(yaha or condition use ki hai)
             if (tmp.size() == 0 || a > tmp.get(tmp.size() - 1)) {
                 tmp.add(a);
             }
-
             else {
                 // Find first element >= a
                 for (int j = 0; j < tmp.size(); j++) {
@@ -21,6 +20,8 @@ class Solution {
                 }
             }
         }
+
+
 
         return tmp.size();
     }
