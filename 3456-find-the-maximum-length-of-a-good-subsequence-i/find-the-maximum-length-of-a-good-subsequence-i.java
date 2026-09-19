@@ -40,7 +40,7 @@ class Solution {
 
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j <= nums.length; j++) {
-                java.util.Arrays.fill(dp[i][j], -1);
+                Arrays.fill(dp[i][j], -1);
             }
         }
 
