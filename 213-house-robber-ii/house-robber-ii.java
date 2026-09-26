@@ -1,52 +1,41 @@
+import java.util.Arrays;
+
 class Solution {
 
-    int[][] dp = new int[101][2];
+    public int solve(int[] nums, int i, int end, int[] dp) {
 
-    int fun(int i, int f, int[] nums) {
-
-        if (i == nums.length - 1) {
-            if (f == 0)
-                return nums[i];
+        if (i > end) {
             return 0;
         }
 
-        if (i >= nums.length) {
-            return 0;
+        if (dp[i] != -1) {
+            return dp[i];
         }
 
-        if (dp[i][f] != -1)
-            return dp[i][f];
+        int steal = nums[i] + solve(nums, i + 2, end, dp);
+        int skip = solve(nums, i + 1, end, dp);
 
-        int ans = 0;
-
-        if (i == 0) {
-
-            int a = nums[i] + fun(i + 2, 1, nums);
-            int b = fun(i + 1, f, nums);
-
-            ans = Math.max(ans, a);
-            ans = Math.max(ans, b);
-
-        } else {
-
-            int a = nums[i] + fun(i + 2, f, nums);
-            int b = fun(i + 1, f, nums);
-
-            ans = Math.max(ans, a);
-            ans = Math.max(ans, b);
-        }
-
-        return dp[i][f] = ans;
+        return dp[i] = Math.max(steal, skip);
     }
 
     public int rob(int[] nums) {
 
-        // Equivalent to memset(dp, -1, sizeof(dp))
-        for (int i = 0; i < 101; i++) {
-            dp[i][0] = -1;
-            dp[i][1] = -1;
+        int n = nums.length;
+
+        if (n == 1) {
+            return nums[0];
         }
 
-        return fun(0, 0, nums);
+        // Case 1: Exclude the last house
+        int[] dp1 = new int[n];
+        Arrays.fill(dp1, -1);
+        int case1 = solve(nums, 0, n - 2, dp1);
+
+        // Case 2: Exclude the first house
+        int[] dp2 = new int[n];
+        Arrays.fill(dp2, -1);
+        int case2 = solve(nums, 1, n - 1, dp2);
+
+        return Math.max(case1, case2);
     }
 }
