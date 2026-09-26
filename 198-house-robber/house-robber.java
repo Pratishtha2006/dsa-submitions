@@ -1,29 +1,24 @@
 class Solution {
-    int[] dp = new int[102];
+    int[] dp;
+     public int solve(int[] nums, int i){
 
-    int fun(int i, int[] nums) {
-        if (i >= nums.length)
+        if(i>= nums.length){
             return 0;
 
-        if (dp[i] != -1)
-            return dp[i];
-
-        int c1 = nums[i] + fun(i + 2, nums);
-        int c2 = fun(i + 1, nums);
-
-        int ans = Math.max(c1, c2);
-
-        dp[i] = ans;
-
-        return ans;
-    }
-
-    public int rob(int[] nums) {
-
-        for (int i = 0; i <= 101; i++) {
-            dp[i] = -1;
         }
 
-        return fun(0, nums);
+        if(dp[i]!= -1) return dp[i];
+        int steal = nums[i] + solve(nums, i+2);
+        int skip = solve(nums, i+1) ;
+
+        return dp[i] = Math.max(steal, skip);
+
+    }
+    public int rob(int[] nums) {
+        dp = new int[nums.length];
+        Arrays.fill(dp,-1);
+
+        return solve(nums,0);
+        
     }
 }
