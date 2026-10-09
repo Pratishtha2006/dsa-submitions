@@ -11,10 +11,18 @@ class Solution {
                     continue;
                 }
 
-                int up = (i > 0) ? grid[i - 1][j] : Integer.MAX_VALUE;
-                int left = (j > 0) ? grid[i][j - 1] : Integer.MAX_VALUE;
+                int c1 = Integer.MAX_VALUE;
+                int c2 = Integer.MAX_VALUE;
 
-                grid[i][j] += Math.min(up, left);
+                if (i > 0) {
+                    c1 = grid[i - 1][j];
+                }
+
+                if (j > 0) {
+                    c2 = grid[i][j - 1];
+                }
+
+                grid[i][j] += Math.min(c1, c2);
             }
         }
 
