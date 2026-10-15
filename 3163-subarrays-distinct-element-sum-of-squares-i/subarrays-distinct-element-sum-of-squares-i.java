@@ -1,6 +1,3 @@
-
-import java.util.*;
-
 class Solution {
     public int sumCounts(List<Integer> nums) {
         int n = nums.size();
