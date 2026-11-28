@@ -1,57 +1,68 @@
+
 import java.util.*;
+
 class Solution {
     public int orangesRotting(int[][] grid) {
+       Queue<int[]> q = new LinkedList<>();
 
         int n = grid.length;
         int m = grid[0].length;
-
-        Queue<int[]> q = new LinkedList<>();
         int fresh = 0;
+
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < m; j++) {
 
                 if(grid[i][j] == 2)
-                    q.add(new int[]{i, j});
+                    q.add(new int[]{i,j});
 
-                if(grid[i][j] == 1)
+                else if(grid[i][j] == 1)
                     fresh++;
             }
         }
 
-        int time = 0;
+        int day = 0;
+           while(!q.isEmpty() && fresh > 0) {
 
-        int[] dx = {-1, 1, 0, 0};
-        int[] dy = {0, 0, -1, 1};
+            int currRot = q.size();
 
-        while(!q.isEmpty() && fresh > 0) {
-
-            int size = q.size();
-
-            for(int i = 0; i < size; i++) {
+            while(currRot > 0) {
 
                 int[] a = q.poll();
-
-                for(int d = 0; d < 4; d++) {
-
-                    int x = a[0] + dx[d];
-                    int y = a[1] + dy[d];
-
-                    if(x >= 0 && y >= 0 && x < n && y < m
-                       && grid[x][y] == 1) {
-
-                        grid[x][y] = 2;
-                        fresh--;
-                        q.add(new int[]{x, y});
-                    }
+                int x = a[0];
+                int y = a[1];
+                if(y-1 >= 0 && grid[x][y-1] == 1) {
+                    grid[x][y-1] = 2;
+                    fresh--;
+                    q.add(new int[]{x,y-1});
                 }
+
+           
+                if(y+1 < m && grid[x][y+1] == 1) {
+                    grid[x][y+1] = 2;
+                    fresh--;
+                    q.add(new int[]{x,y+1});
+                }
+
+           
+                if(x-1 >= 0 && grid[x-1][y] == 1) {
+                    grid[x-1][y] = 2;
+                    fresh--;
+                    q.add(new int[]{x-1,y});
+                }
+                if(x+1 < n && grid[x+1][y] == 1) {
+                    grid[x+1][y] = 2;
+                    fresh--;
+                    q.add(new int[]{x+1,y});
+                }
+
+                currRot--;
             }
 
-            time++;
+            day++;
         }
 
         if(fresh > 0)
             return -1;
-
-        return time;
+       return day;
     }
 }
